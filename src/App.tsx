@@ -18,7 +18,6 @@ import {
   LineChart,
   Feather,
   PlusCircle,
-  Pencil,
   X,
   Globe
 } from 'lucide-react';
@@ -177,7 +176,7 @@ function App() {
     const selectedPromptTemplate = customPrompts.find(p => p.id === selectedPromptId)?.content || '';
 
     try {
-      await generateContentStream(prompt, selectedPromptTemplate, temperature, length, (chunk) => {
+      await generateContentStream(prompt, selectedPromptTemplate, temperature, length, (chunk: string) => {
         fullOutput += chunk;
         setOutput(prev => prev + chunk);
         outputEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -204,7 +203,7 @@ function App() {
     const optimizePromptStr = `请帮我润色和优化以下这段需求描述，使其表达更加清晰、结构更好，直接返回优化后的文本，不要加任何其他解释语：\n\n"${originalInput}"`;
 
     try {
-      await generateContentStream(optimizePromptStr, 0.5, 500, (chunk) => {
+      await generateContentStream(optimizePromptStr, '你是一个提示词优化专家。', 0.5, 500, (chunk: string) => {
         optimizedInput += chunk;
         setInput(optimizedInput);
       });
@@ -236,7 +235,7 @@ function App() {
     setOutput(fullOutput);
 
     try {
-      await generateContentStream(prompt, systemPrompt, 0.3, 2000, (chunk) => {
+      await generateContentStream(prompt, systemPrompt, 0.3, 2000, (chunk: string) => {
         fullOutput += chunk;
         setOutput(fullOutput);
         outputEndRef.current?.scrollIntoView({ behavior: 'smooth' });
