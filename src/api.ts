@@ -1,5 +1,6 @@
 export async function generateContentStream(
   prompt: string,
+  systemPrompt: string,
   temperature: number,
   maxTokens: number,
   onChunk: (chunk: string) => void
@@ -23,7 +24,7 @@ export async function generateContentStream(
         messages: [
           {
             role: 'system',
-            content: '你是一个专业的智能写作助手。'
+            content: systemPrompt || '你是一个专业的智能写作助手。'
           },
           {
             role: 'user',

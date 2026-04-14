@@ -3,7 +3,16 @@
  * 根据 prompts.md 中定义的模板，生成各模式下的完整提示词
  */
 
-export type WritingMode = 'continue' | 'rewrite' | 'expand' | 'summarize' | 'email' | 'copywriting';
+export type WritingMode = 
+  | 'continue' 
+  | 'rewrite' 
+  | 'expand' 
+  | 'summarize' 
+  | 'email' 
+  | 'copywriting'
+  | 'paper'
+  | 'report'
+  | 'novel';
 
 export const promptTemplates: Record<WritingMode, (input: string) => string> = {
   // 文章续写
@@ -27,14 +36,27 @@ export const promptTemplates: Record<WritingMode, (input: string) => string> = {
   },
 
   // 邮件撰写
-  // Note: 基础版本将整个 input 作为邮件意图/主题处理，可后续扩展更多参数(如语气)
   email: (input: string) => {
     return `请写一封专业的邮件，核心意图和主题是：\n\n${input}\n\n请注意邮件格式的完整性（包含称呼、正文、结尾）。`;
   },
 
   // 文案生成
-  // Note: 基础版本将整个 input 作为产品描述/文案需求处理
   copywriting: (input: string) => {
     return `请根据以下描述写一段引人注目的营销文案：\n\n${input}\n\n要求：突出亮点，富有感染力，适合在社交媒体上发布。`;
+  },
+
+  // 论文生成
+  paper: (input: string) => {
+    return `请根据以下主题或大纲撰写一段学术论文：\n\n${input}\n\n要求：语言严谨、客观，逻辑严密，采用学术界常用的表达方式和论述结构。`;
+  },
+
+  // 报告生成
+  report: (input: string) => {
+    return `请根据以下信息撰写一份正式的业务或工作报告：\n\n${input}\n\n要求：条理清晰，分点论述，语言精炼，重点突出数据或结论。`;
+  },
+
+  // 小说生成
+  novel: (input: string) => {
+    return `请根据以下设定或情节开头，创作一段小说故事：\n\n${input}\n\n要求：注重人物描写和场景烘托，情节引人入胜，富有想象力和画面感。`;
   }
 };
